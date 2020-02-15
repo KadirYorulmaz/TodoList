@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace TodoList
 {
     class Program
@@ -8,70 +7,84 @@ namespace TodoList
         static void Main(string[] args)
         {
             TodoList.PreAddTasks();
+            Console.WriteLine("Hi, this is a Todo task manager! ");
 
-            Console.WriteLine("Hi, this is a To do task manager!");
-            Console.WriteLine("You have 4 options");
-            Console.WriteLine("Add new task press [a]");
-            Console.WriteLine("Edit a task press  [e]");
-            Console.WriteLine("Delete task press  [d]");
-            Console.WriteLine("See the list press [s]");
-
-            var readline = Console.ReadLine();
-            var readlineToLower = readline.ToLower();
-            switch (readlineToLower)
+            while (true)
             {
-                case "a":
-                    Console.WriteLine("Enter title");
-                    string taskTitle = Console.ReadLine();
-                    Console.WriteLine("Enter Description");
-                    string taskDescription = Console.ReadLine();
-                    TodoList.AddTask(taskTitle, taskDescription);
-                    break;
+                
+                
+                TodoList.ShowOptions();
 
-                case "e":
-                    Console.WriteLine("Please write the ID to edit task");
-                    string itemEditId = Console.ReadLine();
-                    // Tjek om taskId findes
-                    Console.WriteLine("Select what you want to edit");
-                    Console.WriteLine("For title press       [t]");
-                    Console.WriteLine("For Description press [d]");
-                    string columnToEdit = Console.ReadLine();
+                var readline = Console.ReadLine();
+                var readlineToLower = readline.ToLower();
 
-                    Console.WriteLine("Please enter your phrase");
+                switch (readlineToLower)
+                {
+                    case "a":
+                        Console.WriteLine("     Enter title");
+                        string taskTitle = Console.ReadLine();
+                        Console.WriteLine("     Enter Description");
+                        string taskDescription = Console.ReadLine();
+                        TodoList.AddTask(taskTitle, taskDescription);
+                        TodoList.ShowTask();
+                        break;
 
-                    string enteredPhrase = Console.ReadLine();
+                    case "e":
+                        Console.WriteLine("     Please write the ID to edit task");
+                        string itemEditId = Console.ReadLine().ToUpper();
+ 
+                        //Task Exist ?  
+                        if (TodoList.CheckTaskExist(itemEditId) == 0)
+                        {
+                            Console.WriteLine("******");
+                            Console.WriteLine("     The entered Id does not exist, please try again");
+                            Console.WriteLine("******");
+                        }
+                        else
+                        {
+                            Console.WriteLine("     Select what you want to edit");
+                            Console.WriteLine("     For title press       [t]");
+                            Console.WriteLine("     For Description press [d]");
 
-                    TodoList.EditTask(itemEditId, columnToEdit, enteredPhrase);
+                            string columnToEdit = Console.ReadLine();
 
-                    TodoList.showTask();
-                    break;
+                            Console.WriteLine("     Please enter your phrase");
 
-                case "d":
-                    Console.WriteLine("Please wirte the ID of the task you want to delete");
-                    //Include -> it is not existing try again
-                    string itemDeleteId = Console.ReadLine();
-                    
-                    TodoList.DeleteTask(itemDeleteId);
+                            string enteredPhrase = Console.ReadLine();
+                            TodoList.EditTask(itemEditId, columnToEdit, enteredPhrase);
+                        }
 
-                    TodoList.CheckTaskExist(itemDeleteId);
-                    
-                    break;
+                        TodoList.ShowTask();
+                        break;
 
-                case "s":
-                    Console.WriteLine(TodoList.showTask());
-                    break;
+                    case "d":
+                        Console.WriteLine("     Please write the ID of the task you want to delete");
+                        string itemDeleteId = Console.ReadLine().ToUpper();
+                        //Task Exist ? 
+                        if (TodoList.CheckTaskExist(itemDeleteId) == 0)
+                        {
+                            Console.WriteLine("******");
+                            Console.WriteLine("     The entered Id does not exist, please try again");
+                            Console.WriteLine("******");
+                        }
+                        else
+                        {
+                            TodoList.DeleteTask(itemDeleteId);
 
-                default:
-                    Console.WriteLine("You have 4 options");
-                    Console.WriteLine("Add new task press [a]");
-                    Console.WriteLine("Edit a task press  [e]");
-                    Console.WriteLine("Delete task press  [d]");
-                    Console.WriteLine("See the list press [s]");
-                    break;
+                        }
+                        TodoList.ShowTask();
+                        break;
+
+                    case "s":
+                        TodoList.ShowTask();
+                        break;
+
+                    default:
+                        TodoList.ShowOptions();
+                        break;
+                }
             }
             
-
-
         }
     }
 }

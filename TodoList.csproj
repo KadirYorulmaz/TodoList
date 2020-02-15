@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MarkdownLog" Version="0.9.64" />
     <PackageReference Include="System.Linq" Version="4.3.0" />
   </ItemGroup>
 

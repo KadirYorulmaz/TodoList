@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarkdownLog;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -44,8 +45,11 @@ namespace TodoList
         {
             var ItemToRemove = todolistArray.Find(x => x.TaskId == taskId);
             todolistArray.Remove(ItemToRemove);
-            Console.WriteLine(todolistArray.Find(x => x.TaskId == taskId));
-            showTask();
+            //Console.WriteLine(todolistArray.Find(x => x.TaskId == taskId));
+            //ShowTask();
+            Console.WriteLine("********");
+            Console.WriteLine("Task {0} is now deleted", taskId);
+            Console.WriteLine("********");
         }
 
         public static void EditTask(string taskId, string columnToEdit, string enteredPhrase)
@@ -71,31 +75,50 @@ namespace TodoList
 
         }
 
-        public static List<TodoList> showTask()
+        public static void ShowTask()
         {
             //todolistArray.FindAll( x => x.TaskId);
             //return TodoList.Select(x => x);
-            Console.WriteLine("TaskId | TaskTitle | TaskDescription | TaskCreatedDate");
+            //Console.WriteLine("TaskId | TaskTitle | TaskDescription | TaskCreatedDate");
 
-            foreach (TodoList t in todolistArray)
-            {
-                Console.WriteLine(t.TaskId + ' ' + t.TaskTitle + ' ' + t.TaskDescription + ' ' + t.TaskCreatedDate);
-            }
-            return todolistArray.ToList();
+            //foreach (TodoList t in todolistArray)
+            //{
+            //    Console.WriteLine(t.TaskId + ' ' + t.TaskTitle + ' ' + t.TaskDescription + ' ' + t.TaskCreatedDate);
+            //}
+            //return todolistArray.ToList();
+
+
+            Console.WriteLine(
+                todolistArray.Select(s => new
+                {
+                    Id = s.TaskId,
+                    Title = s.TaskTitle,
+                    Description = s.TaskDescription
+                })
+                  .ToMarkdownTable());
+            //return todolistArray.ToList();
         }
 
-        public static void CheckTaskExist(string taskId)
+        public static int CheckTaskExist(string taskId)
         {
             string taskIdToUpper = taskId.ToUpper();
 
             var task = todolistArray.Find(x => x.TaskId == taskIdToUpper);
             if (task == null)
             {
-                Console.WriteLine("Task {0} is now deleted", taskIdToUpper);
+                // false does not exist
+                //Console.WriteLine("********");
+                //Console.WriteLine("Does not exist");
+                //Console.WriteLine("********");
+                return 0;
             }
             else
             {
-                Console.WriteLine("Something went wrong");
+                //true exist
+                //Console.WriteLine("********");
+                //Console.WriteLine("Exist");
+                //Console.WriteLine("********");
+                return 1;
             }
         }
 
@@ -106,22 +129,36 @@ namespace TodoList
             return localDateTime;
         }
 
+        private static Random random = new Random();
         public static string IdGenerator()
         {
             //Lav random id generator
             //3 bogstaver
             //tjek hvis den er allerede i todolistens id (Skal være unik)
-            return "Random String ID";
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            string newRandomString = new string (Enumerable.Repeat(chars, 3).Select(s => s[random.Next(s.Length)]).ToArray());
+            Console.WriteLine(newRandomString);
+            return newRandomString;
+        }
+        public static void ShowOptions()
+        {
+            Console.WriteLine("     ");
+            Console.WriteLine("     You have 4 options:");
+            Console.WriteLine("     Add task    [a]");
+            Console.WriteLine("     Edit task   [e]");
+            Console.WriteLine("     Delete task [d]");
+            Console.WriteLine("     List Tasks  [s]");
         }
 
         public static void PreAddTasks()
         {
             //Pre-fill the list with tasks
-            var task1 = new TodoList("AEA", "Wake up", "Wake up and eat breakfast", DateGenerator());
-            var task2 = new TodoList("BDB", "Cut Hair", "Cut hair at the barber", DateGenerator());
-            var task3 = new TodoList("CCC", "Go to Meeting", "Meeting with the team", DateGenerator());
-            var task4 = new TodoList("DBD", "Cross fit", "Crossfit 8:00-9:00", DateGenerator());
-            var task5 = new TodoList("EAE", "Dinner", "Eat fastfood", DateGenerator());
+            var task1 = new TodoList(IdGenerator(), "Wake up", "Wake up and eat breakfast", DateGenerator());
+            var task2 = new TodoList(IdGenerator(), "Cut Hair", "Cut hair at the barber", DateGenerator());
+            var task3 = new TodoList(IdGenerator(), "Go to Meeting", "Meeting with the team", DateGenerator());
+            var task4 = new TodoList(IdGenerator(), "Cross fit", "Crossfit 8:00-9:00", DateGenerator());
+            var task5 = new TodoList(IdGenerator(), "Dinner", "Eat fastfood", DateGenerator());
             todolistArray.Add(task1);
             todolistArray.Add(task2);
             todolistArray.Add(task3);
