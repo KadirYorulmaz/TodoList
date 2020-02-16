@@ -11,8 +11,8 @@ namespace TodoList
 
             while (true)
             {
-                
-                
+
+                Console.WriteLine(" ");
                 TodoList.ShowOptions();
 
                 var readline = Console.ReadLine();
@@ -36,9 +36,9 @@ namespace TodoList
                         //Task Exist ?  
                         if (TodoList.CheckTaskExist(itemEditId) == 0)
                         {
-                            Console.WriteLine("******");
+                            Console.WriteLine("     ******");
                             Console.WriteLine("     The entered Id does not exist, please try again");
-                            Console.WriteLine("******");
+                            Console.WriteLine(      "******");
                         }
                         else
                         {
@@ -54,7 +54,7 @@ namespace TodoList
                             TodoList.EditTask(itemEditId, columnToEdit, enteredPhrase);
                         }
 
-                        TodoList.ShowTask();
+                        //TodoList.ShowTask();
                         break;
 
                     case "d":
@@ -63,9 +63,9 @@ namespace TodoList
                         //Task Exist ? 
                         if (TodoList.CheckTaskExist(itemDeleteId) == 0)
                         {
-                            Console.WriteLine("******");
+                            Console.WriteLine("     ******");
                             Console.WriteLine("     The entered Id does not exist, please try again");
-                            Console.WriteLine("******");
+                            Console.WriteLine("     ******");
                         }
                         else
                         {
