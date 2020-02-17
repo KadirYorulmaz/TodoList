@@ -1,4 +1,4 @@
-# Case for Visma Dataløn TodoListApp
+# Case for Visma DatalÃ¸n TodoListApp
 
 ## Introduction 
 This is a console application made in .Net Core
@@ -10,6 +10,6 @@ The project has two classes that are important to look at: Program.cs and TodoLi
 Clone the project
 > git clone https://github.com/KadirYorulmaz/TodoList.git
 
-open folder and click TodoList.csproj
+Open folder and click TodoList.csproj
 This will open the program
 Thereby you can start the console application by clicking on the green run button or by pressing F5
